@@ -3,6 +3,7 @@ import React, { useState } from "react";
 import Button from "../../UI/Button/Button";
 import "./CourseInput.css";
 import ErrorModal from "../../UI/ErrorModal/ErrorModal";
+import styled from "styled-components";
 
 //
 //
@@ -16,6 +17,42 @@ const CourseInput = (props) => {
   const [isValid, setIsValid] = useState(true);
   const error = "Invalid Input!";
   const message = "Course goal cannot be empty!";
+
+  const FormControl = styled.div`
+    .form-control {
+      margin: 0.5rem 0;
+    }
+
+    & label {
+      font-weight: bold;
+      display: block;
+      margin-bottom: 0.5rem;
+    }
+
+    & input {
+      display: block;
+      width: 100%;
+      border: 1px solid #ccc;
+      font: inherit;
+      line-height: 1.5rem;
+      padding: 0 0.25rem;
+    }
+
+    &input:focus {
+      outline: none;
+      background: #fad0ec;
+      border-color: #8b005d;
+    }
+
+    &.invalid input {
+      border-color: red;
+      background-color: #ffd7d7;
+    }
+
+    &.invalid label {
+      color: red;
+    }
+  `;
 
   const handleCourseInputSubmission = (event) => {
     event.preventDefault();
@@ -50,7 +87,7 @@ const CourseInput = (props) => {
       )}
       <form onSubmit={handleCourseInputSubmission}>
         {/* the className is dynamic, changes based on the value of isValid */}
-        <div className={`form-control ${!isValid ? "invalid" : ""}`}>
+        <FormControl className={!isValid && "invalid"}>
           <label
             htmlFor="course-goal"
             style={{
@@ -64,7 +101,7 @@ const CourseInput = (props) => {
             id="course-goal"
             onChange={handleCourseInput}
           ></input>
-        </div>
+        </FormControl>
         <Button type="submit">Add Course Goal</Button>
       </form>
     </div>
